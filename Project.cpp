@@ -12,7 +12,7 @@ using namespace std;
 Player *myPlayer;
 GameMechs *myGM;
 
-bool exitFlag;
+
 
 void Initialize(void);
 void GetInput(void);
@@ -28,7 +28,7 @@ int main(void)
 
     Initialize();
 
-    while(exitFlag == false)  
+    while(myGM->getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -48,23 +48,52 @@ void Initialize(void)
 
     myGM = new GameMechs();
     myPlayer = new Player(myGM);
-
-    exitFlag = false;
+    
 }
 
 void GetInput(void)
 {
-   
+    myGM->setInput(myGM->getInput());
 }
 
 void RunLogic(void)
 {
-    
+    if(myGM->getInput() == '=') 
+    {
+        myGM->incrementScore();
+        myGM->clearInput();
+    }
+    if(myGM->getInput() == '-') {
+        myGM->setLoseFlag();
+        myGM->clearInput();
+    }
+    myPlayer->movePlayer(); 
 }
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen();   
+
+    objPos Playerpos = myPlayer->getPlayerPos();
+    int boardX = myGM->getBoardSizeX();
+    int boardY = myGM->getBoardSizeY();
+
+    for(int i=0;i< boardY;i++)
+    {
+        for(int j=0;j<boardX;j++)
+        {
+            if(i == 0 || j == 0 || i == boardY - 1 || j == boardX - 1)
+                MacUILib_printf("%c", '$');
+            else if(i == Playerpos.pos->y && j == Playerpos.pos->x)
+                MacUILib_printf("%c", Playerpos.symbol);
+            else
+                 MacUILib_printf("%c", ' '); 
+        }
+        MacUILib_printf("\n"); 
+    }
+    MacUILib_printf("Player[x,y]= [%d,%d] ,Symbol: %c, Score: %d\n", Playerpos.pos->x,Playerpos.pos->y,Playerpos.symbol, myGM->getScore());
+    if(myGM->getExitFlagStatus() == true && myGM->getLoseFlagStatus() == true) MacUILib_printf("You LOSE :(");
+    else if(myGM->getExitFlagStatus() == true) MacUILib_printf("Exit Game");
 }
 
 void LoopDelay(void)
