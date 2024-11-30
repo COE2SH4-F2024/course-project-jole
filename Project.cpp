@@ -3,6 +3,7 @@
 #include "objPos.h"
 
 #include "GameMechs.h"
+#include "Food.h"
 #include "Player.h"
 #include "Food.h"
 
@@ -12,6 +13,7 @@ using namespace std;
 
 Player *myPlayer;
 GameMechs *myGM;
+Food *myFood;
 
 
 
@@ -49,6 +51,8 @@ void Initialize(void)
 
     myGM = new GameMechs();
     myPlayer = new Player(myGM);
+    myFood = new Food();
+    //myFood->generateFood(myPlayer->getPlayerPos()); // CHANGE TO INCORPERATE THE ENTIRE ARRAY OF PLAYER TO NOT SPAWN ON TAIL
     
 }
 
@@ -69,6 +73,7 @@ void RunLogic(void)
         myGM->clearInput();
     }
     myPlayer->movePlayer(); 
+    
 }
 
 void DrawScreen(void)
@@ -78,37 +83,32 @@ void DrawScreen(void)
     objPosArrayList* Playerpos = myPlayer->getPlayerPos();
     int playerSize = Playerpos->getSize();
 
-    //objPos foodPos = myGM->getFoodPos();
-
     int boardX = myGM->getBoardSizeX();
     int boardY = myGM->getBoardSizeY();
+    objPos foodPos = myFood->getFoodPos();
 
     for(int i=0;i< boardY;i++)
     {
         for(int j=0;j<boardX;j++)
         {
             int printed = 0;
-            // iterate through the playerPosArrayList to print all the segments
             for(int k = 0; k < playerSize; k++){
-                int printed = 0;
+                printed = 0;
                 objPos thisSeg = Playerpos->getElement(k);
 
-                // check if the current segment x, y pos matches (j, i) coordinate
-                //      if yes, print the symbol
                 if(i == thisSeg.pos->y && j == thisSeg.pos->x){
                     MacUILib_printf("%c", thisSeg.symbol);
                     printed = 1;
                 }
-                // watch out: skip the if-else block if something is printed in here
             }
-
-            if (printed == 0){ // skip printing if a player segment has been printed in this i, j
+            if(printed == 0){
                 if(i == 0 || j == 0 || i == boardY - 1 || j == boardX - 1)
                     MacUILib_printf("%c", '$');
+                else if(i == foodPos.pos->y && j == foodPos.pos->x)
+                    MacUILib_printf("%c", foodPos.symbol);
                 else
-                    MacUILib_printf("%c", ' '); 
-            }
-            else continue;
+                    MacUILib_printf("%c", ' ');
+            } 
         }
         MacUILib_printf("\n"); 
     }
@@ -131,6 +131,7 @@ void CleanUp(void)
 
     delete myPlayer;
     delete myGM;   
+    delete myFood;
 
     MacUILib_uninit();
 }
