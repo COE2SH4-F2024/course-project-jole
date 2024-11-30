@@ -12,8 +12,6 @@ using namespace std;
 class Food
 {
     private:
-
-
         objPos food;
 
     public:
@@ -21,7 +19,7 @@ class Food
         ~Food(); 
 
         void generateFood(objPos blockOff);
-        objPos getFoodPos();
+        objPos getFoodPos() const; 
 
         
 };
