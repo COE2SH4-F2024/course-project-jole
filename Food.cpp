@@ -42,6 +42,8 @@ void Food::generateFood(objPos Blockoff){
     randSym = (rand() % 93) + 33;
     food.symbol = randSym;
 
+    delete[] Gm;
+
 }
 objPos Food::getFoodPos() const
 {
