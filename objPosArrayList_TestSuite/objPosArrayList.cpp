@@ -6,9 +6,10 @@
 
 objPosArrayList::objPosArrayList()
 {
-    aList = new objPos[defaultSize];
     listSize = 0;
-    arrayCapacity = defaultSize;
+    arrayCapacity = ARRAY_MAX_CAP;
+
+    aList = new objPos[ARRAY_MAX_CAP];
 }
 
 objPosArrayList::~objPosArrayList()
@@ -41,7 +42,7 @@ void objPosArrayList::insertTail(objPos thisPos)
         throw std::out_of_range("List is Full.");
         return; 
     }
-    aList[0] = thisPos;
+    aList[listSize] = thisPos;
     listSize++;
 }
 
@@ -70,30 +71,18 @@ void objPosArrayList::removeTail()
 
 objPos objPosArrayList::getHeadElement() const
 {
-    // if(listSize == 0){
-    //     throw std::out_of_range("List is Empty, cannot search for elements");
-    //     return; 
-    // }
-
-    // return aList[0];
+    return aList[0];
 }
 
 objPos objPosArrayList::getTailElement() const
 {
-    // if(listSize == 0){
-    //     throw std::out_of_range("List is Empty, cannot search for elements");
-    //     return; 
-    // }
-
-    // return aList[listSize -1];
+    return aList[listSize -1];
 }
 
 objPos objPosArrayList::getElement(int index) const
 {
-    // if(listSize == 0){
-    //     throw std::out_of_range("List is Empty, cannot search for elements");
-    //     return; 
-    // }
+    // if(index < 0) index = 0;  
+    // else if(index >= listSize) index = listSize - 1;
 
-    // return aList[index];
+    return aList[index];
 }

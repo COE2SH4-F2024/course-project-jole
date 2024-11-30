@@ -12,7 +12,7 @@ class objPosArrayList
         int listSize;
         int arrayCapacity;
 
-        const int defaultSize = 10;
+        const int maxCap = 10;
 
     public:
         objPosArrayList();
