@@ -53,7 +53,7 @@ void Initialize(void)
 
 void GetInput(void)
 {
-    myGM->setInput(myGM->getInput());
+    myGM->collectAsyncInput();
 }
 
 void RunLogic(void)
@@ -103,8 +103,8 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    MacUILib_clearScreen(); 
-
+    MacUILib_clearScreen();
+    
     if(myGM->getExitFlagStatus() == true && myGM->getLoseFlagStatus() == true) MacUILib_printf("You LOSE :(");
     else if(myGM->getExitFlagStatus() == true) MacUILib_printf("Exit Game");
 

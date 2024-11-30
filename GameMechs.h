@@ -20,7 +20,6 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
 
-        objPos food;
 
     public:
         GameMechs();
@@ -32,7 +31,8 @@ class GameMechs
         bool getLoseFlagStatus() const;
         void setLoseFlag();
 
-        char getInput();
+        char getInput() const;
+        void collectAsyncInput();
         void setInput(char this_input);
         void clearInput();
 

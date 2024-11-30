@@ -81,8 +81,8 @@ objPos objPosArrayList::getTailElement() const
 
 objPos objPosArrayList::getElement(int index) const
 {
-    // if(index < 0) index = 0;  
-    // else if(index >= listSize) index = listSize - 1;
+    if(index < 0) index = 0;  
+    else if(index >= listSize) index = listSize - 1;
 
     return aList[index];
 }
