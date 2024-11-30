@@ -12,6 +12,8 @@ class objPosArrayList
         int listSize;
         int arrayCapacity;
 
+        const int defaultSize = 10;
+
     public:
         objPosArrayList();
         ~objPosArrayList();

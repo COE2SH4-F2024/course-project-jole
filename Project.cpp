@@ -92,8 +92,7 @@ void DrawScreen(void)
         MacUILib_printf("\n"); 
     }
     MacUILib_printf("Player[x,y]= [%d,%d] ,Symbol: %c, Score: %d\n", Playerpos.pos->x,Playerpos.pos->y,Playerpos.symbol, myGM->getScore());
-    if(myGM->getExitFlagStatus() == true && myGM->getLoseFlagStatus() == true) MacUILib_printf("You LOSE :(");
-    else if(myGM->getExitFlagStatus() == true) MacUILib_printf("Exit Game");
+    
 }
 
 void LoopDelay(void)
@@ -105,6 +104,9 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen(); 
+
+    if(myGM->getExitFlagStatus() == true && myGM->getLoseFlagStatus() == true) MacUILib_printf("You LOSE :(");
+    else if(myGM->getExitFlagStatus() == true) MacUILib_printf("Exit Game");
 
     delete myPlayer;
     delete myGM;   
