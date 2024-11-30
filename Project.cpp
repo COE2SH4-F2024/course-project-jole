@@ -4,6 +4,7 @@
 
 #include "GameMechs.h"
 #include "Player.h"
+#include "Food.h"
 
 using namespace std;
 
@@ -74,7 +75,11 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();   
 
-    objPos Playerpos = myPlayer->getPlayerPos();
+    objPosArrayList* Playerpos = myPlayer->getPlayerPos();
+    int playerSize = Playerpos->getSize();
+
+    //objPos foodPos = myGM->getFoodPos();
+
     int boardX = myGM->getBoardSizeX();
     int boardY = myGM->getBoardSizeY();
 
@@ -82,16 +87,32 @@ void DrawScreen(void)
     {
         for(int j=0;j<boardX;j++)
         {
-            if(i == 0 || j == 0 || i == boardY - 1 || j == boardX - 1)
-                MacUILib_printf("%c", '$');
-            else if(i == Playerpos.pos->y && j == Playerpos.pos->x)
-                MacUILib_printf("%c", Playerpos.symbol);
-            else
-                 MacUILib_printf("%c", ' '); 
+            int printed = 0;
+            // iterate through the playerPosArrayList to print all the segments
+            for(int k = 0; k < playerSize; k++){
+                int printed = 0;
+                objPos thisSeg = Playerpos->getElement(k);
+
+                // check if the current segment x, y pos matches (j, i) coordinate
+                //      if yes, print the symbol
+                if(i == thisSeg.pos->y && j == thisSeg.pos->x){
+                    MacUILib_printf("%c", thisSeg.symbol);
+                    printed = 1;
+                }
+                // watch out: skip the if-else block if something is printed in here
+            }
+
+            if (printed == 0){ // skip printing if a player segment has been printed in this i, j
+                if(i == 0 || j == 0 || i == boardY - 1 || j == boardX - 1)
+                    MacUILib_printf("%c", '$');
+                else
+                    MacUILib_printf("%c", ' '); 
+            }
+            else continue;
         }
         MacUILib_printf("\n"); 
     }
-    MacUILib_printf("Player[x,y]= [%d,%d] ,Symbol: %c, Score: %d\n", Playerpos.pos->x,Playerpos.pos->y,Playerpos.symbol, myGM->getScore());
+    MacUILib_printf("Player[x,y]= [%d,%d] ,Symbol: %c, Score: %d\n", Playerpos->getHeadElement().pos->x,Playerpos->getHeadElement().pos->y,Playerpos->getHeadElement().symbol, myGM->getScore());
     
 }
 

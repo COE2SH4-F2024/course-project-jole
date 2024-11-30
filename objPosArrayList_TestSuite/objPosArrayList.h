@@ -12,8 +12,6 @@ class objPosArrayList
         int listSize;
         int arrayCapacity;
 
-        const int maxCap = 10;
-
     public:
         objPosArrayList();
         ~objPosArrayList();
