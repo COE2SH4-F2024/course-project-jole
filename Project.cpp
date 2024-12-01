@@ -50,9 +50,8 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     myGM = new GameMechs();
-    myPlayer = new Player(myGM);
     myFood = new Food();
-    myFood->generateFood(myPlayer->getPlayerPos()); // CHANGE TO INCORPERATE THE ENTIRE ARRAY OF PLAYER TO NOT SPAWN ON TAIL
+    myPlayer = new Player(myGM, myFood);
     
 }
 

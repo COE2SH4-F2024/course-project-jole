@@ -1,13 +1,10 @@
 #include "Player.h"
 #include "Food.h"
 
-Player *player;
-Food *food;
-GameMechs *GM;
-
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef, Food* thisFoodRef)
 {
     mainGameMechsRef = thisGMRef;
+    mainFoodRef = thisFoodRef;
     playerPosList = new objPosArrayList();
     myDir = STOP;
 
@@ -17,10 +14,7 @@ Player::Player(GameMechs* thisGMRef)
 
     playerPosList->insertHead(headPos); // initialize with 1 element which is the head
 
-    // more actions to be included
-    // playerPos.pos->x = mainGameMechsRef->getBoardSizeX()/2;
-    // playerPos.pos->y = mainGameMechsRef->getBoardSizeY()/2;
-    // playerPos.symbol = '0';
+    mainFoodRef->generateFood(playerPosList);
 }
 
 
@@ -106,40 +100,22 @@ void Player::movePlayer()
     }
 
     // insert temp objPos to the head of the list
-    if(myDir != STOP)
-        playerPosList->insertHead(temp);
+    playerPosList->insertHead(temp);
 
     // check if the new temp objPos overlaps with the food position (get it from the GameMechs class)
 
-    
-
-    // objPosArrayList* Playerpos = player->getPlayerPos();
-    // for(int i = 0; i<Playerpos->getSize();i++)
-    // {
-    //     if(Playerpos->getHeadElement().pos->x == Playerpos->getElement(i).pos->x && Playerpos->getHeadElement().pos->y == Playerpos->getElement(i).pos->y)
-    //     {
-    //         GM->setLoseFlag();
-    //     }
-    // }
-
-    // objPos foodPos = food->getFoodPos();
-
-    // if(temp.pos->x == foodPos.pos->x && temp.pos->y == foodPos.pos->y){
-    //     // if overlapped, consume the food, and do not remove the snake tail
-    //     food->generateFood(player->getPlayerPos());
-        
-    //     // ADD SCORE
-    // }
-    // else{ // if no overlap, remove tail
-    //     playerPosList->removeTail();
-    // }
+    if(temp.pos->x == mainFoodRef->getFoodPos().pos->x && temp.pos->y == mainFoodRef->getFoodPos().pos->y){
+        mainFoodRef->generateFood(playerPosList);
+    }
+    else{
+        playerPosList->removeTail();
+    }
+    // if overlapped, consume the food, and do not remove the snake tail
+    // increase the score
+   
+    // if no overlap, remove tail
 
     // use isPosEqual() method from objPos class
-
-    
-    //      increase the score
-
-    
     
 }
 
