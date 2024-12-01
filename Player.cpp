@@ -103,7 +103,7 @@ void Player::movePlayer()
     playerPosList->insertHead(temp);
 
     // check if the new temp objPos overlaps with the food position
-    if(temp.pos->x == mainFoodRef->getFoodPos().pos->x && temp.pos->y == mainFoodRef->getFoodPos().pos->y){
+    if(mainFoodRef->getFoodPos().isPosEqual(&temp)){
         // if overlapped, consume the food, and do not remove the snake tail
         mainFoodRef->generateFood(playerPosList);
         mainGameMechsRef->incrementScore(); // increase the score
@@ -116,7 +116,7 @@ void Player::movePlayer()
     for(int i = 1; i < playerPosList->getSize(); i++){
         objPos thisSeg = playerPosList->getElement(i);
 
-        if(temp.pos->x == thisSeg.pos->x && temp.pos->y == thisSeg.pos->y){
+        if(temp.isPosEqual(&thisSeg)){
             mainGameMechsRef->setLoseFlag();
         }
     }

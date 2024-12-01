@@ -24,10 +24,10 @@ void Food::generateFood(objPosArrayList *Blockoff){
         flag = 0;
         randomX = rand() % (xRange-1);
         if(randomX == 0) randomX++;
-        randomY = rand() % (yRange-1);
+        randomY = rand() % (yRange-1); //get the positions within bounds
         if(randomY == 0) randomY++;
         for(int i = 0; i<Blockoff->getSize(); i++)
-            if(randomX == Blockoff->getElement(i).pos->x && randomY == Blockoff->getElement(i).pos->y) flag = 1;
+            if(randomX == Blockoff->getElement(i).pos->x && randomY == Blockoff->getElement(i).pos->y) flag = 1; //retry if on playerelements
         if(flag == 1) continue;
         food.pos->x = randomX;
         food.pos->y = randomY;
