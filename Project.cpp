@@ -52,7 +52,7 @@ void Initialize(void)
     myGM = new GameMechs();
     myPlayer = new Player(myGM);
     myFood = new Food();
-    //myFood->generateFood(myPlayer->getPlayerPos()); // CHANGE TO INCORPERATE THE ENTIRE ARRAY OF PLAYER TO NOT SPAWN ON TAIL
+    myFood->generateFood(myPlayer->getPlayerPos()); // CHANGE TO INCORPERATE THE ENTIRE ARRAY OF PLAYER TO NOT SPAWN ON TAIL
     
 }
 
@@ -60,6 +60,7 @@ void GetInput(void)
 {
     myGM->collectAsyncInput();
 }
+
 
 void RunLogic(void)
 {
