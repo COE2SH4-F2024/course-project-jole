@@ -17,7 +17,7 @@ objPos::objPos(int xPos, int yPos, char sym)
 }
 
 objPos::~objPos(){
-    delete[] pos;
+    delete pos;
 }
 
 objPos::objPos(const objPos &d){
@@ -31,6 +31,10 @@ objPos& objPos::operator=(const objPos &d){
     if(this != &d)
     {
         symbol = d.symbol;
+        if(this->pos != nullptr)
+        {
+            delete pos;
+        }
         pos = new Pos;
         pos->x = d.pos->x;
         pos->y = d.pos->y;

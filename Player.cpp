@@ -117,7 +117,7 @@ void Player::movePlayer()
         objPos thisSeg = playerPosList->getElement(i);
 
         if(temp.pos->x == thisSeg.pos->x && temp.pos->y == thisSeg.pos->y){
-            mainGameMechsRef->setExitTrue();
+            mainGameMechsRef->setLoseFlag();
         }
     }
     

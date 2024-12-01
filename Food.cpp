@@ -34,10 +34,10 @@ void Food::generateFood(objPosArrayList *Blockoff){
         count++;
     }
     count = 0;
-    randSym = (rand() % 93) + 33;
-    food.symbol = randSym;
+    //randSym = (rand() % 93) + 33;
+    food.symbol = 'a';
 
-    delete[] Gm;
+    delete Gm;
 
 }
 objPos Food::getFoodPos() const

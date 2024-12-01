@@ -131,7 +131,7 @@ void CleanUp(void)
 {
     MacUILib_clearScreen();
     
-    if(myGM->getExitFlagStatus() == true && myGM->getLoseFlagStatus() == true) MacUILib_printf("You LOSE :(");
+    if(myGM->getExitFlagStatus() == true && myGM->getLoseFlagStatus() == true) MacUILib_printf("You Lose, Score:%d", myGM->getScore());
     else if(myGM->getExitFlagStatus() == true) MacUILib_printf("Exit Game");
 
     delete myPlayer;
