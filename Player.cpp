@@ -72,7 +72,11 @@ void Player::movePlayer()
     updatePlayerDir();
 
     // create a temp objPos to calculate the new head pos - probably should get the head element of the playerPosList as a good starting point
+    objPosArrayList* foodBucket = mainFoodRef->getFoodPos(); 
+    int foodSize = foodBucket->getSize();
     objPos temp = playerPosList->getHeadElement();
+    int flag = 0;
+    char symbolAte = 0;
 
     switch(myDir)
     {
@@ -100,15 +104,42 @@ void Player::movePlayer()
     }
 
     // insert temp objPos to the head of the list
-    playerPosList->insertHead(temp);
+        playerPosList->insertHead(temp);
+    
 
     // check if the new temp objPos overlaps with the food position
-    if(mainFoodRef->getFoodPos().isPosEqual(&temp)){
-        // if overlapped, consume the food, and do not remove the snake tail
-        mainFoodRef->generateFood(playerPosList);
-        mainGameMechsRef->incrementScore(); // increase the score
+    for(int i = 0; i< foodSize;i++){
+        objPos oneFood = foodBucket->getElement(i);
+        symbolAte = oneFood.getSymbolIfPosEqual(&temp);
+        if(oneFood.isPosEqual(&temp)){
+            // if overlapped, consume the food, and do not remove the snake tail
+            if(symbolAte==107)
+            {
+                mainGameMechsRef->setPoisonFlag();
+                playerPosList->removeHead();
+                flag = 1;
+                break;
+            }
+            else if(symbolAte==104)
+            {
+                for(int l = 0; l < 5; l++)
+                {
+                    mainGameMechsRef->incrementScore();
+                    
+                }
+            }
+            for(int k = 0; k< foodSize;k++)
+            {
+                foodBucket->removeHead();
+            }
+            mainFoodRef->generateFood(playerPosList);
+            mainGameMechsRef->incrementScore(); // increase the score
+            
+            flag = 1;
+        }
     }
-    else{
+    if(flag==0){
+        
         playerPosList->removeTail(); // if no overlap, remove tail
     }
     

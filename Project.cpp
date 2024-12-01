@@ -85,10 +85,12 @@ void DrawScreen(void)
 
     objPosArrayList* Playerpos = myPlayer->getPlayerPos();
     int playerSize = Playerpos->getSize();
+    objPosArrayList* foodPos = myFood->getFoodPos();
+    int foodSize = foodPos->getSize();
 
     int boardX = myGM->getBoardSizeX();
     int boardY = myGM->getBoardSizeY();
-    objPos foodPos = myFood->getFoodPos();
+    
 
     int printed;
 
@@ -106,11 +108,19 @@ void DrawScreen(void)
                     printed = 1;
                 }
             }
+
+            for(int l= 0; l < foodSize; l++){
+                
+                objPos onefood = foodPos->getElement(l);
+
+                if(i == onefood.pos->y && j == onefood.pos->x){
+                    MacUILib_printf("%c", onefood.symbol);
+                    printed = 1;
+                }
+            }
             if(printed == 0){
                 if(i == 0 || j == 0 || i == boardY - 1 || j == boardX - 1)
                     MacUILib_printf("%c", '$');
-                else if(i == foodPos.pos->y && j == foodPos.pos->x)
-                    MacUILib_printf("%c", foodPos.symbol);
                 else
                     MacUILib_printf("%c", ' ');
             } 
@@ -118,6 +128,7 @@ void DrawScreen(void)
         MacUILib_printf("\n"); 
     }
     MacUILib_printf("Player[x,y]= [%d,%d] ,Symbol: %c, Score: %d\n", Playerpos->getHeadElement().pos->x,Playerpos->getHeadElement().pos->y,Playerpos->getHeadElement().symbol, myGM->getScore());
+    MacUILib_printf("K character is poison BE CAREFUL \nH character is Bonus Points");
     
 }
 
@@ -131,8 +142,9 @@ void CleanUp(void)
 {
     MacUILib_clearScreen();
     
-    if(myGM->getExitFlagStatus() == true && myGM->getLoseFlagStatus() == true) MacUILib_printf("You Lose, Score:%d", myGM->getScore());
-    else if(myGM->getExitFlagStatus() == true) MacUILib_printf("Exit Game");
+    if(myGM->getExitFlagStatus() == true && myGM->getLoseFlagStatus() == true) MacUILib_printf("You Lose. Better luck next time! Score:%d", myGM->getScore());
+    if(myGM->getExitFlagStatus() == true && myGM->getPoisonFlagStatus() == true) MacUILib_printf("You were poisoned, OH NO! Score:%d", myGM->getScore());
+    else MacUILib_printf("Exit Game");
 
     delete myPlayer;
     delete myGM;   

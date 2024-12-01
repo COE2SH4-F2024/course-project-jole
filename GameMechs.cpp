@@ -6,6 +6,7 @@ GameMechs::GameMechs()
     input = 0;
     exitFlag = false;
     loseFlag = false;
+    poison = false;
     score = 0;   
     boardSizeX = 20;
     boardSizeY = 10;
@@ -16,6 +17,7 @@ GameMechs::GameMechs(int boardX, int boardY)
     input = 0;
     exitFlag = false;
     loseFlag = false;
+    poison = false;
     score = 0;   
     boardSizeX = boardX;
     boardSizeY = boardY;
@@ -36,7 +38,11 @@ bool GameMechs::getLoseFlagStatus() const
 {
     return loseFlag;
 }
-    
+bool GameMechs::getPoisonFlagStatus() const
+{
+    return poison;
+}
+        
 void GameMechs::collectAsyncInput(){
     
       if(MacUILib_hasChar()){
@@ -82,6 +88,13 @@ void GameMechs::setLoseFlag()
     loseFlag = true;
     exitFlag = true;
 }
+
+void GameMechs::setPoisonFlag()
+{
+    poison = true;
+    exitFlag = true;
+}
+
 
 void GameMechs::setInput(char this_input)
 {

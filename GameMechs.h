@@ -15,6 +15,7 @@ class GameMechs
         char input;
         bool exitFlag;
         bool loseFlag;
+        bool poison;
         int score;
 
         int boardSizeX;
@@ -30,6 +31,8 @@ class GameMechs
         void setExitTrue();
         bool getLoseFlagStatus() const;
         void setLoseFlag();
+        bool getPoisonFlagStatus() const;
+        void setPoisonFlag();
 
         char getInput() const;
         void collectAsyncInput();
