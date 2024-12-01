@@ -143,7 +143,7 @@ void CleanUp(void)
     MacUILib_clearScreen();
     
     if(myGM->getExitFlagStatus() == true && myGM->getLoseFlagStatus() == true) MacUILib_printf("You Lose. Better luck next time! Score:%d", myGM->getScore());
-    if(myGM->getExitFlagStatus() == true && myGM->getPoisonFlagStatus() == true) MacUILib_printf("You were poisoned, OH NO! Score:%d", myGM->getScore());
+    else if(myGM->getExitFlagStatus() == true && myGM->getPoisonFlagStatus() == true) MacUILib_printf("You were poisoned, OH NO! Score:%d", myGM->getScore());
     else MacUILib_printf("Exit Game");
 
     delete myPlayer;

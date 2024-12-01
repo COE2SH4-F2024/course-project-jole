@@ -148,6 +148,7 @@ void Player::movePlayer()
         objPos thisSeg = playerPosList->getElement(i);
 
         if(temp.isPosEqual(&thisSeg)){
+            playerPosList->removeHead();
             mainGameMechsRef->setLoseFlag();
         }
     }

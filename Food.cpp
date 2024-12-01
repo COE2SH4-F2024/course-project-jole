@@ -15,6 +15,8 @@ void Food::generateFood(objPosArrayList *Blockoff){
     srand(time(NULL));
     int count = 0, flag = 0;
     objPos random;
+    objPos randomUp;
+    objPos randomDown;
     char randSym;
     int xRange = (Gm->getBoardSizeX() -1);
     int yRange = (Gm->getBoardSizeY() -1);
@@ -26,11 +28,15 @@ void Food::generateFood(objPosArrayList *Blockoff){
         if(random.pos->x == 0) random.pos->x++;
         random.pos->y = rand() % (yRange-1); //get the positions within bounds
         if(random.pos->y == 0) random.pos->y++;
+        // randomUp.pos->y = random.pos->y;
+        // randomUp.pos->x = random.pos->x++;
+        // randomDown.pos->y = random.pos->y;
+        // randomDown.pos->x = random.pos->x--;
         for(int i = 0; i<Blockoff->getSize(); i++)
             if(random.pos->y == Blockoff->getElement(i).pos->x && random.pos->y == Blockoff->getElement(i).pos->y) flag = 1; //retry if on playerelements
         if(count>0){
             for(int i = 0; i<foodBucket->getSize(); i++){
-                if(random.pos->y == foodBucket->getElement(i).pos->x && random.pos->y == foodBucket->getElement(i).pos->y){
+                if(foodBucket->getElement(i).isPosEqual(&random) || foodBucket->getElement(i).pos->x == (random.pos->x+1) || foodBucket->getElement(i).pos->x == (random.pos->x-1)){
                     flag = 1; 
                 }
             }
@@ -50,10 +56,10 @@ void Food::generateFood(objPosArrayList *Blockoff){
         random.pos->y = rand() % (yRange-1); //get the positions within bounds
         if(random.pos->y == 0) random.pos->y++;
         for(int i = 0; i<Blockoff->getSize(); i++)
-            if(random.pos->y == Blockoff->getElement(i).pos->x && random.pos->y == Blockoff->getElement(i).pos->y) flag = 1; //retry if on playerelements
+            if(random.pos->x == Blockoff->getElement(i).pos->x && random.pos->y == Blockoff->getElement(i).pos->y) flag = 1; //retry if on playerelements
         if(count>0){
             for(int i = 0; i<foodBucket->getSize(); i++){
-                if(random.pos->y == foodBucket->getElement(i).pos->x && random.pos->y == foodBucket->getElement(i).pos->y){
+                if(foodBucket->getElement(i).isPosEqual(&random) || foodBucket->getElement(i).pos->x == (random.pos->x+1) || foodBucket->getElement(i).pos->x == (random.pos->x-1)){
                     flag = 1; 
                 }
             }
