@@ -102,20 +102,24 @@ void Player::movePlayer()
     // insert temp objPos to the head of the list
     playerPosList->insertHead(temp);
 
-    // check if the new temp objPos overlaps with the food position (get it from the GameMechs class)
-
+    // check if the new temp objPos overlaps with the food position
     if(temp.pos->x == mainFoodRef->getFoodPos().pos->x && temp.pos->y == mainFoodRef->getFoodPos().pos->y){
+        // if overlapped, consume the food, and do not remove the snake tail
         mainFoodRef->generateFood(playerPosList);
+        mainGameMechsRef->incrementScore(); // increase the score
     }
     else{
-        playerPosList->removeTail();
+        playerPosList->removeTail(); // if no overlap, remove tail
     }
-    // if overlapped, consume the food, and do not remove the snake tail
-    // increase the score
-   
-    // if no overlap, remove tail
+    
+    // game end check
+    for(int i = 1; i < playerPosList->getSize(); i++){
+        objPos thisSeg = playerPosList->getElement(i);
 
-    // use isPosEqual() method from objPos class
+        if(temp.pos->x == thisSeg.pos->x && temp.pos->y == thisSeg.pos->y){
+            mainGameMechsRef->setExitTrue();
+        }
+    }
     
 }
 
