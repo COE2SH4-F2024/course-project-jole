@@ -73,7 +73,10 @@ void RunLogic(void)
         myGM->setLoseFlag();
         myGM->clearInput();
     }
+
     myPlayer->movePlayer(); 
+
+    
     
 }
 

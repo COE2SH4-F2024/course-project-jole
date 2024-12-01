@@ -1,5 +1,9 @@
 #include "Player.h"
+#include "Food.h"
 
+Player *player;
+Food *food;
+GameMechs *GM;
 
 Player::Player(GameMechs* thisGMRef)
 {
@@ -104,15 +108,38 @@ void Player::movePlayer()
     // insert temp objPos to the head of the list
     playerPosList->insertHead(temp);
 
-    // check if hte new temp objPos overlaps with the food position (get it from the GameMechs class)
+    // check if the new temp objPos overlaps with the food position (get it from the GameMechs class)
+
+    
+
+    // objPosArrayList* Playerpos = player->getPlayerPos();
+    // for(int i = 0; i<Playerpos->getSize();i++)
+    // {
+    //     if(Playerpos->getHeadElement().pos->x == Playerpos->getElement(i).pos->x && Playerpos->getHeadElement().pos->y == Playerpos->getElement(i).pos->y)
+    //     {
+    //         GM->setLoseFlag();
+    //     }
+    // }
+
+    objPos foodPos = food->getFoodPos();
+
+    if(temp.pos->x == foodPos.pos->x && temp.pos->y == foodPos.pos->y){
+        // if overlapped, consume the food, and do not remove the snake tail
+        food->generateFood(player->getPlayerPos());
+        
+        // ADD SCORE
+    }
+    else{ // if no overlap, remove tail
+        playerPosList->removeTail();
+    }
 
     // use isPosEqual() method from objPos class
 
-    // if overlapped, consume the food, and do not remove the snake tail
+    
     //      increase the score
 
-    // if no overlap, remove tail
-    playerPosList->removeTail();
+    
+    
 }
 
 // More methods to be added
