@@ -91,13 +91,15 @@ void DrawScreen(void)
     int boardY = myGM->getBoardSizeY();
     objPos foodPos = myFood->getFoodPos();
 
+    int printed;
+
     for(int i=0;i< boardY;i++)
     {
         for(int j=0;j<boardX;j++)
         {
-            int printed = 0;
+            printed = 0;
             for(int k = 0; k < playerSize; k++){
-                printed = 0;
+                
                 objPos thisSeg = Playerpos->getElement(k);
 
                 if(i == thisSeg.pos->y && j == thisSeg.pos->x){
