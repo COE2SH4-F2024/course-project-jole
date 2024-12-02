@@ -8,13 +8,13 @@ Player::Player(GameMechs* thisGMRef, Food* thisFoodRef)
     playerPosList = new objPosArrayList();
     myDir = STOP;
 
-    objPos headPos(mainGameMechsRef->getBoardSizeX()/2,
+    objPos headPos(mainGameMechsRef->getBoardSizeX()/2, // place the original player position at the middle of the board
                   mainGameMechsRef->getBoardSizeY()/2,
                   '0');
 
     playerPosList->insertHead(headPos); // initialize with 1 element which is the head
 
-    mainFoodRef->generateFood(playerPosList);
+    mainFoodRef->generateFood(playerPosList); // Generate the first food with the starting head position as its blocked space
 }
 
 
@@ -37,9 +37,6 @@ void Player::updatePlayerDir()
     
     switch(input)
     {                      
-        // case ' ':  // exit
-        //     exitFlag = 1;
-        //     break;
         case 'w':
             if(myDir == STOP || myDir == LEFT || myDir == RIGHT){ // can only turn 90 degrees
                 myDir = UP;
@@ -71,10 +68,10 @@ void Player::movePlayer()
     // PPA3 Finite State Machine logic
     updatePlayerDir();
 
-    // create a temp objPos to calculate the new head pos - probably should get the head element of the playerPosList as a good starting point
+    
     objPosArrayList* foodBucket = mainFoodRef->getFoodPos(); 
     int foodSize = foodBucket->getSize();
-    objPos temp = playerPosList->getHeadElement();
+    objPos temp = playerPosList->getHeadElement(); // create a temp objPos to calculate the new head pos 
     int flag = 0;
     char symbolAte = 0;
 
@@ -113,14 +110,14 @@ void Player::movePlayer()
         symbolAte = oneFood.getSymbolIfPosEqual(&temp);
         if(oneFood.isPosEqual(&temp)){
             // if overlapped, consume the food, and do not remove the snake tail
-            if(symbolAte==107)
+            if(symbolAte==107) // poisioned food condition
             {
                 mainGameMechsRef->setPoisonFlag();
                 playerPosList->removeHead();
                 flag = 1;
                 break;
             }
-            else if(symbolAte==104)
+            else if(symbolAte==104) // regular food
             {
                 for(int l = 0; l < 5; l++)
                 {

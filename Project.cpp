@@ -74,15 +74,13 @@ void RunLogic(void)
     }
 
     myPlayer->movePlayer(); 
-
-    
-    
 }
 
 void DrawScreen(void)
 {
     MacUILib_clearScreen();   
 
+    // get the position of the player and food
     objPosArrayList* Playerpos = myPlayer->getPlayerPos();
     int playerSize = Playerpos->getSize();
     objPosArrayList* foodPos = myFood->getFoodPos();
@@ -99,7 +97,7 @@ void DrawScreen(void)
         for(int j=0;j<boardX;j++)
         {
             printed = 0;
-            for(int k = 0; k < playerSize; k++){
+            for(int k = 0; k < playerSize; k++){ // print each element of the snake
                 
                 objPos thisSeg = Playerpos->getElement(k);
 
@@ -109,7 +107,7 @@ void DrawScreen(void)
                 }
             }
 
-            for(int l= 0; l < foodSize; l++){
+            for(int l= 0; l < foodSize; l++){ // print each food
                 
                 objPos onefood = foodPos->getElement(l);
 
@@ -119,10 +117,10 @@ void DrawScreen(void)
                 }
             }
             if(printed == 0){
-                if(i == 0 || j == 0 || i == boardY - 1 || j == boardX - 1)
+                if(i == 0 || j == 0 || i == boardY - 1 || j == boardX - 1)  
                     MacUILib_printf("%c", '$');
                 else
-                    MacUILib_printf("%c", ' ');
+                    MacUILib_printf("%c", ' '); // print the empty space other than the player on the board
             } 
         }
         MacUILib_printf("\n"); 
@@ -142,10 +140,12 @@ void CleanUp(void)
 {
     MacUILib_clearScreen();
     
+    // get lose conditions and print different end screens depending on the lose condition
     if(myGM->getExitFlagStatus() == true && myGM->getLoseFlagStatus() == true) MacUILib_printf("You Lose. Better luck next time! Score:%d", myGM->getScore());
     else if(myGM->getExitFlagStatus() == true && myGM->getPoisonFlagStatus() == true) MacUILib_printf("You were poisoned, OH NO! Score:%d", myGM->getScore());
     else MacUILib_printf("Exit Game");
 
+    // plug leaks
     delete myPlayer;
     delete myGM;   
     delete myFood;
