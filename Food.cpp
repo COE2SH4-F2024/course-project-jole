@@ -21,17 +21,13 @@ void Food::generateFood(objPosArrayList *Blockoff){
     int xRange = (Gm->getBoardSizeX() -1);
     int yRange = (Gm->getBoardSizeY() -1);
 
-    while(count < 3) //doing 5 now
+    while(count < 3) //doing 3 normal characters
    {
         flag = 0;
         random.pos->x = rand() % (xRange-1);
         if(random.pos->x == 0) random.pos->x++;
         random.pos->y = rand() % (yRange-1); //get the positions within bounds
         if(random.pos->y == 0) random.pos->y++;
-        // randomUp.pos->y = random.pos->y;
-        // randomUp.pos->x = random.pos->x++;
-        // randomDown.pos->y = random.pos->y;
-        // randomDown.pos->x = random.pos->x--;
         for(int i = 0; i<Blockoff->getSize(); i++)
             if(random.pos->y == Blockoff->getElement(i).pos->x && random.pos->y == Blockoff->getElement(i).pos->y) flag = 1; //retry if on playerelements
         if(count>0){
@@ -41,14 +37,14 @@ void Food::generateFood(objPosArrayList *Blockoff){
                 }
             }
         }
-            //retry if on other food
+            //retry if on other food and beside other food on x domain to not cause printing errors
         if(flag == 1) continue;
         
         random.symbol = 'a';
         foodBucket->insertHead(random);
         count++;
     }
-      while(count < 5) //doing 5 now
+      while(count < 5) //doing the special chars that change after 3 normal
    {
         flag = 0;
         random.pos->x = rand() % (xRange-1);
@@ -67,14 +63,12 @@ void Food::generateFood(objPosArrayList *Blockoff){
             //retry if on other food
         if(flag == 1) continue;
         
-        if(count==3)random.symbol = 104;
+        if(count==3)random.symbol = 104; //put the special char are a symbol depending on count
         else random.symbol = 107;
         foodBucket->insertHead(random);
         count++;
     }
     count = 0;
-    //randSym = (rand() % 93) + 33;
-    //food.symbol = 'a';
 
     delete Gm;
 

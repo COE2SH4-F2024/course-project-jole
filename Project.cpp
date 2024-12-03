@@ -63,15 +63,15 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    if(myGM->getInput() == '=') 
-    {
-        myGM->incrementScore();
-        myGM->clearInput();
-    }
-    if(myGM->getInput() == '-') {
-        myGM->setLoseFlag();
-        myGM->clearInput();
-    }
+    // if(myGM->getInput() == '=') 
+    // {
+    //     myGM->incrementScore();
+    //     myGM->clearInput();
+    // }                                     //this was for testing purposes and debugging
+    // if(myGM->getInput() == '-') {
+    //     myGM->setLoseFlag();
+    //     myGM->clearInput();
+    // }
 
     myPlayer->movePlayer(); 
 }
