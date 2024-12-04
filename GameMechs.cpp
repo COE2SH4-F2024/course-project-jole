@@ -64,7 +64,7 @@ int GameMechs::getScore() const
 
 void GameMechs::incrementScore()
 {
-    score++; //basic for now can be chaged when above and beyond
+    score++;
 }
 
 int GameMechs::getBoardSizeX() const
@@ -89,7 +89,7 @@ void GameMechs::setLoseFlag()
     exitFlag = true;
 }
 
-void GameMechs::setPoisonFlag()
+void GameMechs::setPoisonFlag() //made for the special char so differntiate end condition
 {
     poison = true;
     exitFlag = true;
